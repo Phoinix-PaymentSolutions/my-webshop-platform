@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { getStoreConfig } from '../../../../lib/firebase';
+import { getStoreConfig } from '../../../../../lib/firebase';
 import { collection, query, where, getDocs, orderBy, doc, updateDoc } from 'firebase/firestore';
-import { db } from '../../../../firebase';
-import DashboardLayout from '../../../../components/admin/DashboardLayout';
+import { db } from '../../../../../firebase';
+import DashboardLayout from '../../../../../components/admin/DashboardLayout';
 
 export default function OrdersAdmin() {
   const router = useRouter();

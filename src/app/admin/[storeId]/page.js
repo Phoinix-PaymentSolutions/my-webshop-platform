@@ -1,97 +1,50 @@
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import { getStoreConfig } from '../../../lib/firebase';
+import DashboardLayout from '../../../../components/admin/DashboardLayout';
+import StatsCard from '../../../../components/admin/StatsCard';
+import { getStoreConfig } from '../../../../lib/firebase';
 import { collection, query, where, getDocs, orderBy, limit } from 'firebase/firestore';
-import { db } from '../../../firebase';
-import DashboardLayout from '../../../components/admin/DashboardLayout';
-import StatsCard from '../../../components/admin/StatsCard';
+import { db } from '../../../../firebase';
 
-export default function AdminDashboard() {
-  const router = useRouter();
-  const { storeId } = router.query;
-  const [store, setStore] = useState(null);
-  const [stats, setStats] = useState({
-    totalOrders: 0,
-    totalRevenue: 0,
-    totalProducts: 0,
-    pendingOrders: 0
+export default async function AdminDashboard({ params }) {
+  const { storeId } = params;
+
+  // Fetch store config
+  const store = await getStoreConfig(storeId);
+
+  // Fetch orders stats
+  const ordersQuery = query(
+    collection(db, 'orders'),
+    where('storeId', '==', storeId)
+  );
+  const ordersSnapshot = await getDocs(ordersQuery);
+
+  let totalRevenue = 0;
+  let pendingCount = 0;
+
+  ordersSnapshot.docs.forEach(doc => {
+    const order = doc.data();
+    totalRevenue += order.total || 0;
+    if (order.status === 'pending') pendingCount++;
   });
-  const [recentOrders, setRecentOrders] = useState([]);
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (storeId) {
-      fetchDashboardData();
-    }
-  }, [storeId]);
+  // Fetch products count
+  const productsQuery = query(
+    collection(db, 'products'),
+    where('storeId', '==', storeId)
+  );
+  const productsSnapshot = await getDocs(productsQuery);
 
-  const fetchDashboardData = async () => {
-    try {
-      // Fetch store config
-      const storeConfig = await getStoreConfig(storeId);
-      setStore(storeConfig);
-
-      // Fetch orders stats
-      const ordersQuery = query(
-        collection(db, 'orders'),
-        where('storeId', '==', storeId)
-      );
-      const ordersSnapshot = await getDocs(ordersQuery);
-      
-      let totalRevenue = 0;
-      let pendingCount = 0;
-      
-      ordersSnapshot.docs.forEach(doc => {
-        const order = doc.data();
-        totalRevenue += order.total || 0;
-        if (order.status === 'pending') pendingCount++;
-      });
-
-      // Fetch products count
-      const productsQuery = query(
-        collection(db, 'products'),
-        where('storeId', '==', storeId)
-      );
-      const productsSnapshot = await getDocs(productsQuery);
-
-      // Fetch recent orders
-      const recentOrdersQuery = query(
-        collection(db, 'orders'),
-        where('storeId', '==', storeId),
-        orderBy('createdAt', 'desc'),
-        limit(5)
-      );
-      const recentOrdersSnapshot = await getDocs(recentOrdersQuery);
-      const recentOrdersData = recentOrdersSnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-
-      setStats({
-        totalOrders: ordersSnapshot.docs.length,
-        totalRevenue: totalRevenue,
-        totalProducts: productsSnapshot.docs.length,
-        pendingOrders: pendingCount
-      });
-
-      setRecentOrders(recentOrdersData);
-    } catch (error) {
-      console.error('Error fetching dashboard data:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4">Loading dashboard...</p>
-        </div>
-      </div>
-    );
-  }
+  // Fetch recent orders
+  const recentOrdersQuery = query(
+    collection(db, 'orders'),
+    where('storeId', '==', storeId),
+    orderBy('createdAt', 'desc'),
+    limit(5)
+  );
+  const recentOrdersSnapshot = await getDocs(recentOrdersQuery);
+  const recentOrders = recentOrdersSnapshot.docs.map(doc => ({
+    id: doc.id,
+    ...doc.data()
+  }));
 
   if (!store) {
     return (
@@ -111,25 +64,25 @@ export default function AdminDashboard() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <StatsCard
             title="Total Orders"
-            value={stats.totalOrders}
+            value={ordersSnapshot.docs.length}
             icon="📋"
             color="blue"
           />
           <StatsCard
             title="Total Revenue"
-            value={`€${stats.totalRevenue.toFixed(2)}`}
+            value={`€${totalRevenue.toFixed(2)}`}
             icon="💰"
             color="green"
           />
           <StatsCard
             title="Total Products"
-            value={stats.totalProducts}
+            value={productsSnapshot.docs.length}
             icon="📦"
             color="yellow"
           />
           <StatsCard
             title="Pending Orders"
-            value={stats.pendingOrders}
+            value={pendingCount}
             icon="⏳"
             color="red"
           />

@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
-import { db } from '../../../../firebase';
-import { getStoreConfig } from '../../../../lib/firebase';
-import DashboardLayout from '../../../../components/admin/DashboardLayout';
+import { db } from '../../../../../firebase';
+import { getStoreConfig } from '../../../../../lib/firebase';
+import DashboardLayout from '../../../../../components/admin/DashboardLayout';
 
 export default function NewProduct() {
   const router = useRouter();
