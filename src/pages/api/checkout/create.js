@@ -1,5 +1,5 @@
-import { createOrder } from '../../../../lib/firebase';
-import { createMolliePayment } from '../../../../lib/mollie';
+import { createOrder } from '../../../lib/firebase';
+import { createMolliePayment } from '../../../lib/mollie';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
