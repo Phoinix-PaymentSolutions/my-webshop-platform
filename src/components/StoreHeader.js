@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { Instagram, Facebook } from 'lucide-react';
 
+// Custom TikTok icon since it's not in lucide-react
 const TikTokIcon = () => (
-  <svg viewBox="0 0 24 24" style={{ width: '20px', height: '20px' }} fill="currentColor">
+  <svg viewBox="0 0 24 24" className="w-5 h-5" fill="currentColor">
     <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.10z"/>
   </svg>
 );
@@ -14,9 +15,9 @@ export default function StoreHeader({ store, socials = [], cartCount = 0 }) {
   const getSocialIcon = (type) => {
     switch (type.toLowerCase()) {
       case 'instagram':
-        return <Instagram style={{ width: '20px', height: '20px' }} />;
+        return <Instagram className="w-5 h-5" />;
       case 'facebook':
-        return <Facebook style={{ width: '20px', height: '20px' }} />;
+        return <Facebook className="w-5 h-5" />;
       case 'tiktok':
         return <TikTokIcon />;
       default:
@@ -24,199 +25,89 @@ export default function StoreHeader({ store, socials = [], cartCount = 0 }) {
     }
   };
 
-  const headerStyle = {
-    backgroundColor: store?.brandColor || '#ffffff',
-    color: store?.textColor || '#1f2937',
-    boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
-    borderBottom: '1px solid #f3f4f6',
-    position: 'sticky',
-    top: 0,
-    zIndex: 40
-  };
-
-  const containerStyle = {
-    maxWidth: '80rem',
-    margin: '0 auto',
-    padding: '0 1.5rem'
-  };
-
-  const flexStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    height: '5rem'
-  };
-
-  const logoContainerStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '1rem'
-  };
-
-  const logoStyle = {
-    width: '48px',
-    height: '48px',
-    position: 'relative',
-    borderRadius: '8px',
-    boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)'
-  };
-
-  const titleStyle = {
-    fontSize: '1.5rem',
-    fontWeight: 'bold',
-    letterSpacing: '-0.025em',
-    margin: 0
-  };
-
-  const descriptionStyle = {
-    fontSize: '0.875rem',
-    opacity: 0.75,
-    margin: '0.25rem 0 0 0'
-  };
-
-  const navStyle = {
-    display: 'none',
-    alignItems: 'center',
-    gap: '2rem'
-  };
-
-  const navLinkStyle = {
-    fontWeight: '500',
-    textDecoration: 'none',
-    color: 'inherit',
-    transition: 'opacity 0.2s',
-    cursor: 'pointer'
-  };
-
-  const rightSideStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '1rem'
-  };
-
-  const socialContainerStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '0.5rem'
-  };
-
-  const socialLinkStyle = {
-    color: store?.textColor ? `${store.textColor}80` : '#6b7280',
-    padding: '0.5rem',
-    borderRadius: '9999px',
-    textDecoration: 'none',
-    transition: 'all 0.2s',
-    cursor: 'pointer'
-  };
-
-  const cartStyle = {
-    position: 'relative',
-    fontSize: '1.5rem'
-  };
-
-  const cartBadgeStyle = {
-    position: 'absolute',
-    top: '-8px',
-    right: '-8px',
-    backgroundColor: store?.accentColor || '#ef4444',
-    color: 'white',
-    fontSize: '0.75rem',
-    borderRadius: '9999px',
-    width: '24px',
-    height: '24px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontWeight: 'bold'
-  };
-
-  const mobileButtonStyle = {
-    padding: '0.5rem',
-    borderRadius: '8px',
-    border: 'none',
-    backgroundColor: 'transparent',
-    color: store?.textColor || '#374151',
-    cursor: 'pointer',
-    transition: 'background-color 0.2s'
-  };
-
-  const mobileMenuStyle = {
-    borderTop: '1px solid #f3f4f6',
-    padding: '1rem 0'
-  };
-
-  const mobileNavStyle = {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '0.75rem'
-  };
-
-  const mobileLinkStyle = {
-    fontWeight: '500',
-    padding: '0.5rem 0',
-    textDecoration: 'none',
-    color: 'inherit',
-    cursor: 'pointer'
-  };
-
-  // Media query simulation for mobile
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-
   return (
-    <header style={headerStyle}>
-      <div style={containerStyle}>
-        <div style={flexStyle}>
-          {/* Logo and Store Name */}
-          <div style={logoContainerStyle}>
+    <header 
+      className="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-40"
+      style={{ 
+        backgroundColor: store?.brandColor || '#ffffff',
+        color: store?.textColor || '#000000'
+      }}
+    >
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="flex items-center justify-between h-20">
+          {/* Logo and Store Name - Left Side */}
+          <div className="flex items-center space-x-4">
             {store?.logoUrl && (
-              <div style={logoStyle}>
-                <Image
-                  src={store.logoUrl}
-                  alt={`${store.name} logo`}
-                  fill
-                  style={{ objectFit: 'contain', borderRadius: '8px' }}
-                />
+              <div className="flex-shrink-0">
+                <div className="h-12 w-12 relative">
+                  <Image
+                    src={store.logoUrl}
+                    alt={`${store.name} logo`}
+                    fill
+                    className="object-contain rounded-lg shadow-sm"
+                  />
+                </div>
               </div>
             )}
             <div>
-              <h1 style={titleStyle}>
+              <h1 className="text-2xl font-bold tracking-tight">
                 {store?.name || 'Store Name'}
               </h1>
               {store?.description && (
-                <p style={descriptionStyle}>
+                <p className="text-sm opacity-75 mt-1">
                   {store.description}
                 </p>
               )}
             </div>
           </div>
 
-          {/* Desktop Navigation */}
-          <nav style={{ ...navStyle, display: isMobile ? 'none' : 'flex' }}>
-            <a href="#home" style={navLinkStyle}>Home</a>
-            <a href="#menu" style={navLinkStyle}>Menu</a>
-            <a href="#information" style={navLinkStyle}>Information</a>
-            <a href="#reviews" style={navLinkStyle}>Reviews</a>
-            <a href="#contact" style={navLinkStyle}>Contact</a>
+          {/* Center Navigation - Desktop Only */}
+          <nav className="hidden md:flex items-center space-x-8">
+            <a 
+              href="#home" 
+              className="font-medium hover:opacity-70 transition-opacity duration-200"
+            >
+              Home
+            </a>
+            <a 
+              href="#menu" 
+              className="font-medium hover:opacity-70 transition-opacity duration-200"
+            >
+              Menu
+            </a>
+            <a 
+              href="#information" 
+              className="font-medium hover:opacity-70 transition-opacity duration-200"
+            >
+              Information
+            </a>
+            <a 
+              href="#reviews" 
+              className="font-medium hover:opacity-70 transition-opacity duration-200"
+            >
+              Reviews
+            </a>
+            <a 
+              href="#contact" 
+              className="font-medium hover:opacity-70 transition-opacity duration-200"
+            >
+              Contact
+            </a>
           </nav>
 
-          {/* Right Side */}
-          <div style={rightSideStyle}>
+          {/* Right Side - Social Media Links & Cart */}
+          <div className="flex items-center space-x-4">
             {/* Social Media Icons */}
             {socials.length > 0 && (
-              <div style={socialContainerStyle}>
+              <div className="hidden sm:flex items-center space-x-2">
                 {socials.map((social, index) => (
                   <a
                     key={index}
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    style={socialLinkStyle}
-                    onMouseEnter={(e) => {
-                      e.target.style.backgroundColor = 'rgba(0,0,0,0.05)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.backgroundColor = 'transparent';
-                    }}
+                    className="text-gray-500 hover:text-gray-700 transition-colors duration-200 p-2 hover:bg-gray-50 rounded-full"
+                    aria-label={`Visit our ${social.type}`}
                   >
                     {getSocialIcon(social.type)}
                   </a>
@@ -224,43 +115,87 @@ export default function StoreHeader({ store, socials = [], cartCount = 0 }) {
               </div>
             )}
 
-            {/* Cart */}
+            {/* Cart Indicator */}
             {cartCount > 0 && (
-              <div style={cartStyle}>
-                <span>🛒</span>
-                <span style={cartBadgeStyle}>
+              <div className="relative">
+                <span className="text-2xl">🛒</span>
+                <span 
+                  className="absolute -top-2 -right-2 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center font-bold"
+                  style={{ backgroundColor: store?.accentColor || '#ef4444' }}
+                >
                   {cartCount > 99 ? '99+' : cartCount}
                 </span>
               </div>
             )}
 
-            {/* Mobile button */}
-            <button
-              style={{...mobileButtonStyle, display: isMobile ? 'block' : 'none'}}
+            {/* Mobile menu button */}
+            <button 
+              className="md:hidden p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              onMouseEnter={(e) => {
-                e.target.style.backgroundColor = 'rgba(0,0,0,0.05)';
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.backgroundColor = 'transparent';
-              }}
             >
-              <svg style={{ width: '24px', height: '24px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </button>
           </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Navigation */}
         {mobileMenuOpen && (
-          <div style={mobileMenuStyle}>
-            <nav style={mobileNavStyle}>
-              <a href="#home" style={mobileLinkStyle} onClick={() => setMobileMenuOpen(false)}>Home</a>
-              <a href="#menu" style={mobileLinkStyle} onClick={() => setMobileMenuOpen(false)}>Menu</a>
-              <a href="#information" style={mobileLinkStyle} onClick={() => setMobileMenuOpen(false)}>Information</a>
-              <a href="#reviews" style={mobileLinkStyle} onClick={() => setMobileMenuOpen(false)}>Reviews</a>
-              <a href="#contact" style={mobileLinkStyle} onClick={() => setMobileMenuOpen(false)}>Contact</a>
+          <div className="md:hidden border-t border-gray-100 py-4">
+            <nav className="flex flex-col space-y-3">
+              <a 
+                href="#home" 
+                className="text-gray-700 hover:text-gray-900 font-medium py-2"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Home
+              </a>
+              <a 
+                href="#menu" 
+                className="text-gray-700 hover:text-gray-900 font-medium py-2"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Menu
+              </a>
+              <a 
+                href="#information" 
+                className="text-gray-700 hover:text-gray-900 font-medium py-2"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Information
+              </a>
+              <a 
+                href="#reviews" 
+                className="text-gray-700 hover:text-gray-900 font-medium py-2"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Reviews
+              </a>
+              <a 
+                href="#contact" 
+                className="text-gray-700 hover:text-gray-900 font-medium py-2"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Contact
+              </a>
+              
+              {/* Mobile Social Links */}
+              {socials.length > 0 && (
+                <div className="flex items-center space-x-4 pt-3 border-t border-gray-100">
+                  {socials.map((social, index) => (
+                    <a 
+                      key={index} 
+                      href={social.url} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-gray-500 hover:text-gray-700 transition-colors duration-200"
+                    >
+                      {getSocialIcon(social.type)}
+                    </a>
+                  ))}
+                </div>
+              )}
             </nav>
           </div>
         )}
