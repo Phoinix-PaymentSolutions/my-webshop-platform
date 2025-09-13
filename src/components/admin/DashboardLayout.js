@@ -1,3 +1,4 @@
+"use client";
 import { useState } from 'react';
 
 // Main App component containing all the dashboard logic and UI
