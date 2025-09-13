@@ -340,9 +340,6 @@ export default function App() {
           </div>
         </div>
       )}
-
-      {/* Tailwind CSS CDN script for styling */}
-      <script src="https://cdn.tailwindcss.com"></script>
     </div>
   );
 }
