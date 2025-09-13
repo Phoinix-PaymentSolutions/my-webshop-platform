@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { getStoreConfig, getStoreProducts } from '../../../lib/firebase';
 import ProductGrid from '../../../components/ProductGrid';
 import StoreHeader from '../../../components/StoreHeader';
