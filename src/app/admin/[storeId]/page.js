@@ -4,7 +4,8 @@ import { getStoreConfig } from '@/lib/firebase';
 import { collection, query, where, getDocs, orderBy, limit } from 'firebase/firestore';
 import { db } from '../../../../firebase';
 
-export default async function AdminDashboard({ params }) {
+export default async function AdminDashboard(props) {
+  const params = await props.params;
   const { storeId } = params;
 
   // Fetch store config
