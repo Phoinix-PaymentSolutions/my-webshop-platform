@@ -1,5 +1,5 @@
 import { createMollieClient } from '@mollie/api-client';
-import { db } from '../firebase';
+import { db } from '../../firebase';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 
 const mollie = createMollieClient({
