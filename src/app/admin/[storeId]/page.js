@@ -1,5 +1,5 @@
-import DashboardLayout from '../../../../components/admin/DashboardLayout';
-import StatsCard from '../../../../components/admin/StatsCard';
+import DashboardLayout from '../../../components/admin/DashboardLayout';
+import StatsCard from '../../../components/admin/StatsCard';
 import { getStoreConfig } from '../../../../lib/firebase';
 import { collection, query, where, getDocs, orderBy, limit } from 'firebase/firestore';
 import { db } from '../../../../firebase';
