@@ -13,7 +13,7 @@ export default function StorePage({ store, products }) {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900">Store Not Found</h1>
-          <p className="text-gray-600 mt-2">This store doesn't exist or is inactive.</p>
+          <p className="text-gray-600 mt-2">&apos;s store doesn&apos;t exist or is inactive.</p>
         </div>
       </div>
     );
