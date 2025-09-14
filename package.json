@@ -15,11 +15,15 @@
     "@firebase/storage": "^0.14.0",
     "@headlessui/react": "^1.7.17",
     "@mollie/api-client": "^4.3.3",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "firebase": "^12.2.1",
     "lucide-react": "^0.544.0",
     "next": "^15.6.0-canary.5",
     "react": "^18",
     "react-dom": "^18",
+    "tailwind-merge": "^3.3.1",
+    "tailwindcss-animate": "^1.0.7",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

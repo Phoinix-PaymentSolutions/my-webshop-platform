@@ -18,7 +18,9 @@ export default function Home() {
             <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
               src/app/page.tsx
             </code>
-            .
+            .<div className="bg-red-500 text-white p-4">
+               If this is red with white text, Tailwind works!
+            </div>
           </li>
           <li className="tracking-[-.01em]">
             Save and see your changes instantly.
